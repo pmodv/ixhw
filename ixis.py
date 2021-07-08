@@ -1,6 +1,4 @@
 from numpy.core.fromnumeric import sort
-import torch
-from torch.nn import Embedding
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -17,7 +15,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import OneHotEncoder
 
 from imblearn.ensemble import BalancedRandomForestClassifier
-from functools import reduce
 
 
 
@@ -49,11 +46,6 @@ list_cols = list(df.select_dtypes(['object']))
 # nothing weird, here
 [ print(c,l) for c,l in zip(list_cols,list(map(lambda x: df[x].unique(), list_cols)))]
 
-# primae facie on representation:
-# 1) gensim good option for 'job' field embedded represetation
-# 2) 'education' field is a good candidate for ordinal representation
-# 3) target encoding, perhaps, for 'poutcome' and 'contact'
-# 4) unsure about month:  will try ordinal, for now
 
 # cardinality
 [ print(c,l) for c,l in zip(list_cols,list(map(lambda x: len(df[x].unique()), list_cols)))]
@@ -125,7 +117,6 @@ ohe_l = ['marital','default','housing','loan','contact','poutcome']
 # Apply one-hot encoder to each column with categorical data
 OH_encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
 df_OH = pd.DataFrame(OH_encoder.fit_transform(df[ohe_l]))
-print(df_OH)
 
 # One-hot encoding removed index; put it back
 df_OH.index = df.index
@@ -139,11 +130,6 @@ df_no_cat = df.drop(ohe_l, axis=1)
 
 # Add one-hot encoded columns to numerical features
 df_OH = pd.concat([df_no_cat, df_OH], axis=1)
-print(df_OH)
-
-# last part of feature representation - target encoding with additive SMOOTHING for 'job' field
-print(len(df_OH.columns))
-
 
 
 
@@ -182,20 +168,17 @@ for train_idx, test_idx in cv.split(X,y):
     X_train['job'] = X_train['job'].map(means)
     X_test['job'] = X_test['job'].map(means)
     
-    #print(len(X_train['job']))
-    #print(X_train['job'])
-    # fit score etc.
     model.fit(X_train,y_train)
     y_pred = model.predict(X_test)
     f1.append((f1_score(y_test, y_pred)))
     p.append((precision_score(y_test, y_pred)))
     r.append((recall_score(y_test, y_pred)))
     importance = model.feature_importances_
-    # summarize feature importance
+    
+    # capture feature importance
     features.append(importance)
-    #for i,v in enumerate(importance):
-    #s	print('Feature: %0d, Score: %.5f' % (i,v))
-
+    
+# imbalanced data tricks not really working...
 print(mean(f1),mean(p),mean(r))
 
 # get average feature importance...
@@ -216,5 +199,7 @@ plt.show()
 
 # duration is the most significant feature using balanced random forests
 
-# this model gives high recall but low precision - need different approach for imbalanced data
-# will use tabular neural network model with embeddings for encoded categories
+# this RF model gives high recall but low precision - need different approach for imbalanced data
+# will use tabular neural network model with embeddings for encoded categories with cardinality > 4 and OHE otherwise
+
+# it will be interesting to see most significant feature using a NN architecture
