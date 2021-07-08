@@ -17,6 +17,11 @@ from sklearn.preprocessing import OneHotEncoder
 from imblearn.ensemble import BalancedRandomForestClassifier
 
 
+# ran out of time for tabnet...  bummer
+from pytorch_tabnet.tab_model import TabNetClassifier
+
+
+from xgboost import XGBClassifier
 
 try:
     df = pd.read_csv('bank-full.csv',sep=';')
@@ -71,7 +76,7 @@ f, axes = plt.subplots(2, 2, sharex=False, sharey=False)
 # when I examine this plot, I see the potential for an ordinal encoding of 'month' helping, not hurting, RF, in splitting data.
 sns.countplot('month', data=df, palette=colors,hue='y',order =list(map(lambda x: str(x+1), list(range(12)))),ax = axes[0,0])
 axes[0,0].set_title('Month Distributions \n Month of Year || 1-12', fontsize=8)
-
+df['month'] = pd.to_numeric(df['month'])
 
 # we will use target encoding for 'job' field
 # will be evaluated during CV and used for each test
@@ -85,7 +90,7 @@ df['education'] = df['education'].map(x)
 # when I examine this plot, I see the potential for an ordinal encoding of 'education' helping, not hurting, RF, in splitting data.
 sns.countplot('education', data=df, palette=colors,hue='y',order =list(map(lambda x: str(x), list(range(4)))),ax = axes[0,1])
 axes[0,1].set_title('Education Distributions  \n Education Level || 0-3', fontsize=8)
-
+df['education'] = pd.to_numeric(df['education'])
 
 # interesting split potential for poutcome... will leave for next round
 sns.countplot('poutcome',data=df, palette=colors,hue='y',ax = axes[1,0])
@@ -100,13 +105,13 @@ sns.countplot('y', data=df, palette=colors,ax = axes[1,1])
 axes[1,1].set_title('Target Distributions \n (No: Declined || Yes: Approved)', fontsize=8)
 
 
-plt.show(block=True)
+#plt.show(block=True)
 
 # job
 sns.countplot('job', data=df, palette=colors,hue='y')
 plt.title('Job Distributions \n Job', fontsize=8)
 plt.xticks(rotation=45)
-plt.show()
+#plt.show()
 
 # HUUUGE imbalance in target - will need sampling strategy to make RF work properly
 
@@ -139,15 +144,10 @@ df_OH['y'] = pd.to_numeric(df_OH['y'].map(m1))
 y = df_OH['y']
 X = df_OH.drop('y', axis = 1)
 
-
-
-print(list(df_OH.groupby('job')['y']))
-
-
 # we're FINALLY ready to do RF - first, we must address imbalanced data
 # us imblearn and repeated stratified cv
 
-model = BalancedRandomForestClassifier(n_estimators=10)
+model = BalancedRandomForestClassifier(n_estimators=100)
 cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=10)
 
 f1_train = []
@@ -169,10 +169,13 @@ for train_idx, test_idx in cv.split(X,y):
     X_test['job'] = X_test['job'].map(means)
     
     model.fit(X_train,y_train)
-    y_pred = model.predict(X_test)
-    f1.append((f1_score(y_test, y_pred)))
-    p.append((precision_score(y_test, y_pred)))
-    r.append((recall_score(y_test, y_pred)))
+    
+    y_pred1 = model.predict(X_test)
+    f1.append((f1_score(y_test, y_pred1)))
+    p.append((precision_score(y_test, y_pred1)))
+    r.append((recall_score(y_test, y_pred1)))
+
+
     importance = model.feature_importances_
     
     # capture feature importance
@@ -186,7 +189,7 @@ print(mean(f1),mean(p),mean(r))
 feature_mat = np.array(features)
 feature_avg = np.mean(feature_mat, axis = 0)
 
-
+# xgbc
 
 l_cols = X.columns
 df_f_avg = pd.DataFrame(list(zip(l_cols,feature_avg)), columns=['Feature','Average_Importance'])
@@ -195,11 +198,52 @@ sorted_df = df_f_avg.sort_values(by=['Average_Importance'], ascending=False)
 print(sorted_df)
 sns.barplot(x='Feature', y='Average_Importance',data=sorted_df)
 plt.xticks(rotation = 90)
-plt.show()
+#plt.show()
 
-# duration is the most significant feature using balanced random forests
+y = df_OH['y']
+X = df_OH.drop('y', axis = 1)
 
-# this RF model gives high recall but low precision - need different approach for imbalanced data
-# will use tabular neural network model with embeddings for encoded categories with cardinality > 4 and OHE otherwise
 
-# it will be interesting to see most significant feature using a NN architecture
+cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=10)
+
+
+best_f = 0
+best_p = 0
+best_r = 0
+features = []
+for w in [1,10,25,50,90,100,1000]:
+    model = XGBClassifier(scale_pos_weight = w)
+
+    for train_idx, test_idx in cv.split(X,y):
+        X_train, X_test = X.iloc[train_idx,:],X.iloc[test_idx,:]
+        y_train, y_test = y[train_idx], y[test_idx]
+
+        # update target encoding after shuffle/split but before fitting
+        # use df_OH for this :)
+        means = df_OH.iloc[train_idx,:].groupby('job')['y'].agg('mean')
+        # replace values for training data set use avg cv target encoding
+        #print(means)
+        
+        X_train['job'] = X_train['job'].map(means)
+        X_test['job'] = X_test['job'].map(means)
+        
+        model.fit(X_train,y_train)
+        y_pred = model.predict(X_test)
+        if ((f1_score(y_test, y_pred)) > best_f):
+            best_f = f1_score(y_test, y_pred)
+            best_f_para = {'W':w}
+        if (precision_score(y_test, y_pred)) > best_p:
+            best_p = precision_score(y_test, y_pred)
+            best_p_para = {'W':w}
+        if (recall_score(y_test, y_pred)) > best_r:
+            best_r = recall_score(y_test, y_pred)
+            best_r_para = {'W':w}
+        
+    # imbalanced data tricks not really working...
+    print(best_f,best_p,best_r)
+    print(best_f_para,best_p_para,best_r_para)
+
+    # better precision but recall dropped
+    # let's encode months using OHE
+
+
