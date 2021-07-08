@@ -24,6 +24,7 @@ Outcomes of EDA:
 * No missing data
 * "Objects" in dataframe had no anomalous values 
 * Used ordinal encoding for 'month' and 'education' fields
+  * Made 'sense' for a tree model:  data looked like it could split, nicely, in ordinal manner.  
 * Used OHE for: 'marital','default', 'housing', 'loan', 'contact'
 * Used cross-validated target encoding for 'job'
 * Target data highly imbalanced:  roughly 89%/11%
