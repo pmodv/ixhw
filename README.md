@@ -20,7 +20,7 @@ Objectives:
 * Examine target data for imbalance
 * Examine input data for imbalance
 
-![EDA1](eda_chart_1.png)
+![EDA1](eda_charts_1.png)
 ![EDA2](eda_chart_2.png)
 
 Outcomes of EDA:
