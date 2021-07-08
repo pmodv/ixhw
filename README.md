@@ -20,8 +20,8 @@ Objectives:
 * Examine target data for imbalance
 * Examine input data for imbalance
 
-![EDA1](../master/myFolder/eda_1.png)
-![EDA2](../master/myFolder/eda_2.png)
+![EDA1](../ixhw/eda_chart_1.png)
+![EDA2](../ixhw/eda_chart_2.png)
 
 Outcomes of EDA:
 * No missing data
