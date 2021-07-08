@@ -34,6 +34,8 @@ Outcomes of EDA:
 * Some input data extremely imbalanced: default data 98% negative and 2% positive.  Some jobs in 'job' and also some months in 'month' were also very rare.
 
 # Imblearn RF Classifier
+* Use RF to try and learn features without lots of tuning/parameter optimization - good for comparison, later.
+* Maybe get lucky and have a good model (not in our case!)
 * Use imblearn BalancedRandomForest classifier in conjuction with sklearn RepeatedStratifiedKfold cv.
 * Had to hand-code train-test loop for cv mean target encoding or else would have to edit and test new objects within API - hence, no pipelines, etc.
 * Expectation was that between the model and the repeated, stratified, and random cross-validation, my fitted model would capture at least some of the lower-frequency data.
