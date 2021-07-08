@@ -45,6 +45,11 @@ Outcomes of EDA:
 ![RF1](RF_features.png)
 * It is entirely possible that my ordinal encoding of 'month', or other ordinal or OH encodings, caused serious performance issues with the balanced RF.  A NN approach should illuminate this.
 
+# XGBoost
+F1                 P                  R
+0.6128702757916241 0.6707152496626181 0.9593572778827977
+{'W': 10} {'W': 1} {'W': 1000}
+
 # Pytorch TabNet
 Initial Architecture:
 * KISS:  single layer for first model - this isn't image processing.
