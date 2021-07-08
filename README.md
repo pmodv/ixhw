@@ -35,6 +35,7 @@ Outcomes of EDA:
 
 # Imblearn RF Classifier
 * Use imblearn BalancedRandomForest classifier in conjuction with sklearn RepeatedStratifiedKfold cv.
+* Had to hand-code train-test loop for cv mean target encoding or else would have to edit and test new objects within API - hence, no pipelines, etc.
 * Expectation was that between the model and the repeated, stratified, and random cross-validation, my fitted model would capture at least some of the lower-frequency data.
 * This was not the case: using 5 stratified folds and 10 iterations of the folding, the mean recall was over 80%, while mean f1 score was 54% and mean precision was 41%.
 * The BalancedRandomForest model identified 'duration' as the most important feature.
