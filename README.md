@@ -1,6 +1,6 @@
 # ixhw
 
-There are several main steps to my project:
+There are several steps to my project:
 
 * EDA - done
 
