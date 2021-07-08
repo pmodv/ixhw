@@ -43,3 +43,5 @@ Outcomes of EDA:
 * The BalancedRandomForest model identified 'duration' as the most important feature.
 * I want to find the most important feature using a NN and contrast/compare them.
 ![RF1](RF_features.png)
+
+# Pytorch TabNet
