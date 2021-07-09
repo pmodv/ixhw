@@ -57,32 +57,33 @@ F1            Precision      Recall
 0.60          0.46           0.84
 
 * Feature Importance Order for XGBoost, W=10, repeated stratified 5-fold cv:
-24      po_other            0.256411
-21  contact_tele            0.250191
-15     house_yes            0.073240
-6       duration            0.067209
-25    po_success            0.058710
-5          month            0.046315
-17       loan_no            0.033523
-4            day            0.021754
-19   contact_unk            0.020181
-8          pdays            0.019656
-7       campaign            0.014694
-11        single            0.013888
-1            job            0.013745
-0            age            0.013081
-2      education            0.012055
-12      divorced            0.012024
-3        balance            0.011993
-23       po_fail            0.011624
-20  contact_cell            0.010997
-13        def_no            0.010199
-22        po_unk            0.010177
-9       previous            0.009650
-10       married            0.008683
-14       def_yes            0.000000
-16      house_no            0.000000
-18      loan_yes            0.000000
+
+24  |   po_other    |        0.256411
+21  |contact_tele   |         0.250191
+15  |   house_yes   |         0.073240
+6   |    duration   |         0.067209
+25  |  po_success   |         0.058710
+5   |       month   |         0.046315
+17  |     loan_no   |         0.033523
+4   |         day   |         0.021754
+19  | contact_unk   |         0.020181
+8   |       pdays   |         0.019656
+7   |    campaign   |         0.014694
+11  |      single   |         0.013888
+1   |         job   |         0.013745
+0   |         age   |         0.013081
+2   |   education   |         0.012055
+12  |    divorced   |         0.012024
+3   |     balance   |         0.011993
+23  |     po_fail   |         0.011624
+20  |contact_cell   |         0.010997
+13  |      def_no   |         0.010199
+22  |      po_unk   |         0.010177
+9   |    previous   |         0.009650
+10  |     married   |         0.008683
+14  |     def_yes   |         0.000000
+16  |    house_no   |         0.000000
+18  |    loan_yes   |         0.000000
 
 # Pytorch TabNet - TBD - future date
 Initial Architecture:
