@@ -57,8 +57,8 @@ F1            Precision      Recall
 0.60          0.46           0.84
 
 * Feature Importance Order for XGBoost, W=10, repeated stratified 5-fold cv:
-
-24  |   po_other    |        0.256411
+----|---------------|------------------
+24  |   po_other    |         0.256411
 21  |contact_tele   |         0.250191
 15  |   house_yes   |         0.073240
 6   |    duration   |         0.067209
