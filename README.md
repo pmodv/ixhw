@@ -3,10 +3,9 @@
 There are several steps to my project:
 
 * EDA - done
-
 * Random Forest Model - done
-
-* Neural Network Model - Tabular - pending
+* Boosting Model - done
+* Neural Network Model - PyTorch TabNet with categorical embeddings - next project
 
 
 # EDA
@@ -87,6 +86,13 @@ Idx_|feature_name___|__importance______
 14  |     def_yes   |         0.000000
 16  |    house_no   |         0.000000
 18  |    loan_yes   |         0.000000
+
+## XGboost importance vs RF
+* XGBoost identified completely different variables than RF for importance.
+* Because of XGBoost's superior f1 score and precision, it is likely RF overfit on its important variables during training, whereas XGBoost did not (as much).
+
+## Decision Time - Which variables matter?
+* Use chi-squared statistic 
 
 # Pytorch TabNet - TBD - future date
 Initial Architecture:
