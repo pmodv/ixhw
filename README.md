@@ -46,10 +46,47 @@ Outcomes of EDA:
 * It is entirely possible that my ordinal encoding of 'month', or other ordinal or OH encodings, caused serious performance issues with the balanced RF.  A NN approach should illuminate this.
 
 # XGBoost
-F1                 P                  R
-0.6128702757916241 0.6707152496626181 0.9593572778827977
-{'W': 10} {'W': 1} {'W': 1000}
+* we get the best f1 results with a weight of 10.  This makes sense, since no/yes is close to 10 in our data for subscriptions.
+* If we make turn weights way-up, we just overfit positive results.
+* We still get better f1 score than from Balanced RF.
+F1            Precision          Recall
+0.62          0.67               0.96
+*{'W': 10}    {'W': 1}          {'W': 1000}
+* Final Result with W = 10:
+F1            Precision      Recall
+0.60          0.46           0.84
 
-# Pytorch TabNet
+* Feature Importance Order for XGBoost, W=10, repeated stratified 5-fold cv:
+24      po_other            0.256411
+21  contact_tele            0.250191
+15     house_yes            0.073240
+6       duration            0.067209
+25    po_success            0.058710
+5          month            0.046315
+17       loan_no            0.033523
+4            day            0.021754
+19   contact_unk            0.020181
+8          pdays            0.019656
+7       campaign            0.014694
+11        single            0.013888
+1            job            0.013745
+0            age            0.013081
+2      education            0.012055
+12      divorced            0.012024
+3        balance            0.011993
+23       po_fail            0.011624
+20  contact_cell            0.010997
+13        def_no            0.010199
+22        po_unk            0.010177
+9       previous            0.009650
+10       married            0.008683
+14       def_yes            0.000000
+16      house_no            0.000000
+18      loan_yes            0.000000
+
+# Pytorch TabNet - TBD - future date
 Initial Architecture:
-* KISS:  single layer for first model - this isn't image processing.
+* KISS:  single layer for first model - this isn't image processing. Add layers, as needed.
+* Represent all categorical variables with cardinality > 4, including date and month, as embeddings to be learned by network.
+ * Remaining categorical variables would be OHE
+* Standardize numerical inputs.
