@@ -78,6 +78,7 @@ def check_df(df):
 
     colors = ["#0101DF", "#DF0101"]
 
+    
     sns.countplot('y', data=df, palette=colors,ax = axes[1,1])
     axes[1,1].set_title('Target Distributions \n (No: Declined || Yes: Approved)', fontsize=8)
 
