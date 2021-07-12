@@ -69,7 +69,7 @@ F1            Precision      Recall
 0.60          0.46           0.84
 
 ## Feature Importance Order for XGBoost, W=10, repeated stratified 5-fold cv:
-
+![XGB](xg_tgt.png)
 
 Idx_|feature_name___|__importance______
 ----|---------------|------------------       
