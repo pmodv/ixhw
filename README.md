@@ -108,8 +108,16 @@ Idx_|feature_name___|__importance______
 
 ## XGboost importance vs RF
 * XGBoost identified completely different variables than RF for importance.
-* Because of XGBoost's superior f1 score and precision, it is likely RF overfit on its important variables during training, whereas XGBoost did not (as much).
 
+# Conclusion and final experiments
+* I added binary variables to the classifier for numeric variables with no significant improvement:
+ balance < 0
+ pdays == -1
+ duration == 0
+ 
+* If I had more time, I would examine more sophisticated binning to improve my classifier outcome. 
+ 
+ 
 
 
 # Pytorch TabNet - TBD - future project
