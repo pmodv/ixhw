@@ -3,6 +3,7 @@
 ## CODE:
 
 First run:  ixis_diag.py to produce charts, EDA, etc.
+
 Main run: ixis_run.py to run models.
 
 There are several steps to my project:
