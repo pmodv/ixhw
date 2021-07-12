@@ -104,10 +104,9 @@ Idx_|feature_name___|__importance______
 * XGBoost identified completely different variables than RF for importance.
 * Because of XGBoost's superior f1 score and precision, it is likely RF overfit on its important variables during training, whereas XGBoost did not (as much).
 
-## Decision Time - Which variables matter?
-* Use chi-squared statistic 
 
-# Pytorch TabNet - TBD - future date
+
+# Pytorch TabNet - TBD - future project
 Initial Architecture:
 * KISS:  single layer for first model - this isn't image processing. Add layers, as needed.
 * Represent all categorical variables with cardinality > 4, including date and month, as embeddings to be learned by network.
