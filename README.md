@@ -38,21 +38,28 @@ Outcomes of EDA:
 * Use imblearn BalancedRandomForest classifier in conjuction with sklearn RepeatedStratifiedKfold cv.
 * Had to hand-code train-test loop for cv mean target encoding or else would have to edit and test new objects within API - hence, no pipelines, etc.
 * Expectation was that between the model and the repeated, stratified, and random cross-validation, my fitted model would capture at least some of the lower-frequency data.
-* This was not the case: using 5 stratified folds and 10 iterations of the folding, the mean recall was over 80%, while mean f1 score was 54% and mean precision was 41%.
+###Performance:
+F1            Precision          Recall
+0.54          0.41               0.89
 * The BalancedRandomForest model identified 'duration' as the most important feature.
 * I want to find the most important feature using a NN and contrast/compare them.
 ![RF1](RF_features.png)
 * It is entirely possible that my ordinal encoding of 'month', or other ordinal or OH encodings, caused serious performance issues with the balanced RF.  
 
 # Imblearn RF Classifier v2
-* Using what I learned from v1, encode 'month' using target encoding
-* All other settings the same as in v1
+* Using what I learned from v1, encode 'month' using target encoding.
+* All other settings the same as in v1.
+###Performance:
+F1            Precision          Recall
+0.56          0.41               0.89
+
 ![RF2](rf_tgt.png)
 
 # XGBoost
 * we get the best f1 results with a weight of 10.  This makes sense, since no/yes is close to 10 in our data for subscriptions.
 * If we make turn weights way-up, we just overfit positive results.
 * We still get better f1 score than from Balanced RF.
+###Performance
 F1            Precision          Recall
 0.62          0.67               0.96
 *{'W': 10}    {'W': 1}          {'W': 1000}
