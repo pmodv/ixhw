@@ -92,7 +92,7 @@ class my_df:
 
 
 
-""" model = BalancedRandomForestClassifier(n_estimators=100)
+model = BalancedRandomForestClassifier(n_estimators=100)
 cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=10)
 
 f1 =[]
@@ -242,7 +242,7 @@ plt.xticks(rotation = 90)
 plt.show()
 
 
- """
+
 # NB: could use input 2 but being cautious, here
 input_3 = my_df(df)
 
@@ -272,7 +272,7 @@ cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=5)
 best_f = 0
 best_p = 0
 best_r = 0
-"""
+
 for w in [1,10,25,50,90,100,1000]:
     model = XGBClassifier(scale_pos_weight = w)
 
@@ -314,29 +314,29 @@ for w in [1,10,25,50,90,100,1000]:
 
     # best f1 from W=10 (kinda makes sense)
 
-"""
 
 
-input_1 = my_df(df)
+
+input_4 = my_df(df)
 
 # we set month ordinals, in this current iteration (hint: it's terrible - use tgt encoding for v2)
-input_1.set_ord_code_ed()
-input_1.set_ord_code_month()
+input_4.set_ord_code_ed()
+input_4.set_ord_code_month()
 
 
 # build OHE df
-input_1.ohe()
+input_4.ohe()
 
 # ordinals
 
 # all encoded - split into X/y
 
 # make it so
-input_1.set_X()
-input_1.set_y()
+input_4.set_X()
+input_4.set_y()
 
-X= input_1.X
-y= input_1.y
+X= input_4.X
+y= input_4.y
 
 
 cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=10)
