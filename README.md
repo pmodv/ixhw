@@ -44,7 +44,7 @@ Outcomes of EDA:
 * Use imblearn BalancedRandomForest classifier in conjuction with sklearn RepeatedStratifiedKfold cv.
 * Had to hand-code train-test loop for cv mean target encoding or else would have to edit and test new objects within API - hence, no pipelines, etc.
 * Expectation was that between the model and the repeated, stratified, and random cross-validation, my fitted model would capture at least some of the lower-frequency data.
-###Performance:
+### Performance:
 F1            Precision          Recall
 0.54          0.41               0.89
 * The BalancedRandomForest model identified 'duration' as the most important feature.
@@ -55,7 +55,7 @@ F1            Precision          Recall
 # Imblearn RF Classifier v2
 * Using what I learned from v1, encode 'month' using target encoding.
 * All other settings the same as in v1.
-###Performance:
+### Performance:
 F1            Precision          Recall
 0.56          0.41               0.89
 
@@ -66,7 +66,7 @@ F1            Precision          Recall
 * If we make turn weights way-up, we just overfit positive results.
 * Use same encoding scheme as in RF v2.
 * We still get better f1 score than from Balanced RF.
-###Performance
+### Performance
 F1            Precision          Recall
 0.62          0.67               0.96
 *{'W': 10}    {'W': 1}          {'W': 1000}
