@@ -58,6 +58,7 @@ F1            Precision          Recall
 # XGBoost
 * we get the best f1 results with a weight of 10.  This makes sense, since no/yes is close to 10 in our data for subscriptions.
 * If we make turn weights way-up, we just overfit positive results.
+* Use same encoding scheme as in RF v2.
 * We still get better f1 score than from Balanced RF.
 ###Performance
 F1            Precision          Recall
@@ -71,33 +72,33 @@ F1            Precision      Recall
 
 
 Idx_|feature_name___|__importance______
-----|---------------|------------------
-24  |   po_other    |         0.256411
-21  |contact_tele   |         0.250191
-15  |   house_yes   |         0.073240
-6   |    duration   |         0.067209
-25  |  po_success   |         0.058710
-5   |       month   |         0.046315
-17  |     loan_no   |         0.033523
-4   |         day   |         0.021754
-19  | contact_unk   |         0.020181
-8   |       pdays   |         0.019656
-7   |    campaign   |         0.014694
-11  |      single   |         0.013888
-1   |         job   |         0.013745
-0   |         age   |         0.013081
-2   |   education   |         0.012055
-12  |    divorced   |         0.012024
-3   |     balance   |         0.011993
-23  |     po_fail   |         0.011624
-20  |contact_cell   |         0.010997
-13  |      def_no   |         0.010199
-22  |      po_unk   |         0.010177
-9   |    previous   |         0.009650
-10  |     married   |         0.008683
-14  |     def_yes   |         0.000000
-16  |    house_no   |         0.000000
-18  |    loan_yes   |         0.000000
+----|---------------|------------------       
+21 | contact_tele   |        0.235742
+24 |     po_other   |        0.194642
+25 |   po_success   |        0.166917
+15 |    house_yes   |        0.064893
+6  |     duration   |        0.062216
+5  |        month   |        0.056394
+17 |      loan_no   |        0.028360
+8  |        pdays   |         0.017808
+19 |  contact_unk   |        0.017380
+4  |          day   |        0.016819
+0  |          age   |         0.012502
+12 |     divorced   |         0.012399
+7  |     campaign   |         0.012391
+11 |       single   |         0.012087
+1  |          job   |         0.011967
+2  |    education   |         0.010924
+3  |      balance   |         0.010889
+22 |       po_unk   |         0.010695
+23 |      po_fail   |         0.010510
+9  |     previous   |         0.009619
+20 | contact_cell   |         0.008679
+10 |      married   |         0.008087
+13 |       def_no   |         0.008080
+14 |      def_yes   |         0.000000
+16 |     house_no   |         0.000000
+18 |     loan_yes   |         0.000000
 
 ## XGboost importance vs RF
 * XGBoost identified completely different variables than RF for importance.
