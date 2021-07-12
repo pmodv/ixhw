@@ -32,7 +32,7 @@ Outcomes of EDA:
 * Target data highly imbalanced:  roughly 89%/11%
 * Some input data extremely imbalanced: default data 98% negative and 2% positive.  Some jobs in 'job' and also some months in 'month' were also very rare.
 
-# Imblearn RF Classifier
+# Imblearn RF Classifier v1
 * Use RF to try and learn features without lots of tuning/parameter optimization - good for comparison, later.
 * Maybe get lucky and have a good model (not in our case!)
 * Use imblearn BalancedRandomForest classifier in conjuction with sklearn RepeatedStratifiedKfold cv.
@@ -42,7 +42,12 @@ Outcomes of EDA:
 * The BalancedRandomForest model identified 'duration' as the most important feature.
 * I want to find the most important feature using a NN and contrast/compare them.
 ![RF1](RF_features.png)
-* It is entirely possible that my ordinal encoding of 'month', or other ordinal or OH encodings, caused serious performance issues with the balanced RF.  A NN approach should illuminate this.
+* It is entirely possible that my ordinal encoding of 'month', or other ordinal or OH encodings, caused serious performance issues with the balanced RF.  
+
+# Imblearn RF Classifier v2
+* Using what I learned from v1, encode 'month' using target encoding
+* All other settings the same as in v1
+![RF2](rf_tgt.png)
 
 # XGBoost
 * we get the best f1 results with a weight of 10.  This makes sense, since no/yes is close to 10 in our data for subscriptions.
